@@ -1,0 +1,29 @@
+ZAD 1
+serwer
+
+cd "d:\stud\sem 5\OchronaDanych\6\rsa_server_client_with_keys\server"
+$env:DEADBEEF_KEY_1 = "key.1"
+$env:DEADBEEF_KEY_2 = "key.2"
+python app.py
+
+klient 
+
+cd "d:\stud\sem 5\OchronaDanych\6"
+python send_message.py
+
+
+ZAD 2 a
+
+TERMINAL 1 - SERWER:
+cd "d:\stud\sem 5\OchronaDanych\6\rsa_server_client_with_keys\server"
+$env:DEADBEEF_KEY_1 = "key.1"
+$env:DEADBEEF_KEY_2 = "key.2"
+python app.py
+
+TERMINAL 2 - BOB_BOB (czeka na wiadomość):
+cd "d:\stud\sem 5\OchronaDanych\6"
+python bob_bob_client.py
+
+TERMINAL 3 - JOHN_SNOW (wysyła wiadomość):
+cd "d:\stud\sem 5\OchronaDanych\6"
+python john_snow_client.py
