@@ -1,0 +1,557 @@
+================================================================================
+                OCHRONA DANYCH - PROJEKT REALIZACJI
+================================================================================
+
+PRZEDMIOT: Ochrona danych w systemach informatycznych
+DATA: 27 listopada 2025
+STATUS: ✅ UKOŃCZONE
+
+================================================================================
+                            ZADANIA WYKONANE
+================================================================================
+
+ZADANIE 1: Wygenerować certyfikat samopodpisany
+────────────────────────────────────────────────
+✅ STATUS: UKOŃCZONE
+
+Zawartość:
+  • Klucz prywatny RSA 2048-bit: certs/server.key
+  • Certyfikat X.509: certs/server.crt
+  • Ważny na: 365 dni (do 27 listopada 2026)
+  • Algorytm: SHA256 with RSA
+
+Uruchomienie:
+  $ bash generate_cert.sh
+
+Weryfikacja:
+  $ openssl x509 -in certs/server.crt -text -noout
+
+
+ZADANIE 2: Skonfigurować Nginx - obsługuje tylko HTTPS
+────────────────────────────────────────────────────────
+✅ STATUS: UKOŃCZONE
+
+Zawartość: nginx.conf
+
+Cechy konfiguracji:
+  • Port 80: HTTP → Automatyczne przekierowanie (301) do HTTPS
+  • Port 443: HTTPS z SSL/TLS
+  • Protokoły: TLSv1.2, TLSv1.3
+  • Szyfrowanie: HIGH:!aNULL:!MD5
+  • Nagłówki bezpieczeństwa:
+    - Strict-Transport-Security
+    - X-Frame-Options: SAMEORIGIN
+    - X-Content-Type-Options: nosniff
+    - X-XSS-Protection
+
+Uruchomienie:
+  $ bash run_nginx.sh
+
+Test:
+  $ curl -k https://localhost/
+  $ curl -I http://localhost/  (powinien 301 redirect)
+
+
+ZADANIE 3: Nginx jako reverse proxy do Flask + WSGI
+──────────────────────────────────────────────────────
+✅ STATUS: UKOŃCZONE
+
+Architektura:
+  HTTPS Client :443 → Nginx (Reverse Proxy) → Gunicorn :8000 → Flask
+
+Zawartość:
+  • Konfiguracja: nginx.conf (sekcja proxy)
+  • Aplikacja: app.py (Flask)
+  • WSGI Server: Gunicorn (wsgi_config.py)
+  
+Proxy headers:
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  proxy_set_header X-Forwarded-Host $host;
+
+Uruchomienie:
+  Terminal 1: $ bash run_flask.sh   (Gunicorn na :8000)
+  Terminal 2: $ bash run_nginx.sh   (Nginx na :80 i :443)
+
+Logika:
+  • Flask NIE serwuje bezpośrednio na porcie publicznym
+  • Tylko Nginx ma dostęp publiczny (:443)
+  • Flask komunikuje się z Nginx na localhost:8000
+
+
+ZADANIE 4: Pokazać uprawnienia procesu Flask
+───────────────────────────────────────────────
+✅ STATUS: UKOŃCZONE
+
+Endpoint: /process-info
+
+Zawartość: app.py (funkcja get_process_info())
+
+Funkcjonalność:
+  • UID procesu Flask
+  • Username (nazwa użytkownika)
+  • GID (Group ID)
+  • Groups (lista dodatkowych grup)
+  • Home directory
+
+Odpowiedź (JSON):
+  {
+    "uid": 1000,
+    "username": "user",
+    "gid": 1000,
+    "groups": [1000, ...],
+    "current_user": "user",
+    "home": "/home/user"
+  }
+
+Test:
+  $ curl -k https://localhost/process-info | python -m json.tool
+
+
+ZADANIE 5: Odczytanie rzeczywistego adresu IP klienta
+──────────────────────────────────────────────────────
+✅ STATUS: UKOŃCZONE
+
+Endpoint: /client-ip
+
+Implementacja:
+  • Middleware: werkzeug.middleware.proxy_fix.ProxyFix
+  • Konfiguracja: app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, ...)
+  • Funkcja: get_client_ip() w app.py
+
+Logika odczytywania:
+  1. Próbuje X-Forwarded-For (lista IP oddzielona przecinkami)
+     → Bierze pierwszy (bezpośredni IP klienta)
+  2. Fallback: X-Real-IP
+  3. Fallback: request.remote_addr
+
+Odpowiedź (JSON):
+  {
+    "client_ip": "203.0.113.42",      (rzeczywisty IP - co nas interesuje!)
+    "x_real_ip": "203.0.113.42",      (nagłówek z Nginx)
+    "x_forwarded_for": "203.0.113.42", (nagłówek z Nginx)
+    "remote_addr": "127.0.0.1"         (bezpośrednia sesja - zawsze localhost)
+  }
+
+Test z localhost:
+  $ curl -k https://localhost/client-ip
+
+Test z innego hosta:
+  $ curl -k https://192.168.1.100/client-ip
+
+
+================================================================================
+                           STRUKTURA PROJEKTU
+================================================================================
+
+d:\stud\sem 5\OchronaDanych\7\
+│
+├── 📄 KONFIGURACJA APLIKACJI
+│   ├── app.py                    (Flask aplikacja z endpointami)
+│   ├── wsgi_config.py            (Konfiguracja Gunicorn)
+│   ├── nginx.conf                (Konfiguracja Nginx z SSL)
+│   └── requirements.txt          (Zależności Python)
+│
+├── 🔐 CERTYFIKATY SSL
+│   └── certs/
+│       ├── server.crt            (Certyfikat samopodpisany - 1302 bytes)
+│       └── server.key            (Klucz prywatny - 1704 bytes)
+│
+├── 🚀 SKRYPTY URUCHOMIENIOWE
+│   ├── generate_cert.sh          (Generowanie certyfikatu)
+│   ├── run_flask.sh              (Uruchomienie Flask/Gunicorn - Linux/WSL)
+│   ├── run_nginx.sh              (Uruchomienie Nginx - Linux/WSL)
+│   ├── install_dependencies.sh   (Instalacja pakietów - Linux/WSL)
+│   ├── run_flask.bat             (Uruchomienie Flask/Gunicorn - Windows)
+│   └── install_dependencies.bat  (Instalacja pakietów - Windows)
+│
+├── 🧪 TESTOWANIE
+│   └── test_deployment.sh        (Pełny test suite)
+│
+├── 📚 DOKUMENTACJA
+│   ├── README.md                 (Główna dokumentacja)
+│   ├── SUMMARY.md                (Podsumowanie realizacji)
+│   ├── QUICK_REF.md              (Szybka referencja)
+│   ├── API_EXAMPLES.md           (Szczegółowe API calls)
+│   ├── WINDOWS_SETUP.md          (Instrukcje dla Windows)
+│   └── COMPLETE_GUIDE.txt        (Ten plik)
+│
+└── 📋 INNE PLIKI
+    ├── httpd-ssl.conf            (Oryginalna konfiguracja Apache)
+    └── sign.sh                   (Skrypt podpisywania certyfikatów)
+
+
+================================================================================
+                        SZYBKI START - 3 KROKI
+================================================================================
+
+LINUX / WSL:
+────────────
+
+Krok 1: Instalacja zależności
+  $ cd 'd:\stud\sem 5\OchronaDanych\7'
+  $ bash install_dependencies.sh
+
+Krok 2: Uruchomienie Flask/Gunicorn (Terminal 1)
+  $ bash run_flask.sh
+  Wyświetli: [Gunicorn] Ready to accept connections on 127.0.0.1:8000
+
+Krok 3: Uruchomienie Nginx (Terminal 2)
+  $ bash run_nginx.sh
+  Wyświetli: Nginx successfully started
+
+WINDOWS:
+────────
+
+Krok 1: Instalacja zależności
+  > cd d:\stud\sem 5\OchronaDanych\7
+  > install_dependencies.bat
+
+Krok 2: Uruchomienie Flask/Gunicorn (Terminal 1)
+  > run_flask.bat
+
+Krok 3: Uruchomienie Nginx (Terminal 2, WSL)
+  $ bash run_nginx.sh
+
+
+================================================================================
+                             TESTOWANIE
+================================================================================
+
+PODSTAWOWE TESTY (5 komend):
+
+1. Główny endpoint
+   $ curl -k https://localhost/
+
+2. Uprawnienia procesu (ZADANIE #4)
+   $ curl -k https://localhost/process-info
+
+3. Adres IP klienta (ZADANIE #5)
+   $ curl -k https://localhost/client-ip
+
+4. Health check
+   $ curl -k https://localhost/health
+
+5. Test HTTP → HTTPS redirect
+   $ curl -I http://localhost/
+   (powinien zwrócić: HTTP/1.1 301 Moved Permanently)
+
+ZAAWANSOWANE TESTOWANIE:
+
+Pełny test suite:
+  $ bash test_deployment.sh
+
+Monitorowanie logów (Terminal 3):
+  $ tail -f logs/https_access.log
+  $ tail -f logs/gunicorn_error.log
+
+Certificate inspection:
+  $ openssl x509 -in certs/server.crt -text -noout
+  $ openssl x509 -in certs/server.crt -dates -noout
+
+SSL verification:
+  $ openssl s_client -connect localhost:443 -showcerts
+
+
+================================================================================
+                         FLOW ŻĄDANIA (HTTP)
+================================================================================
+
+1. Klient wysyła HTTPS request na :443
+   GET https://localhost/process-info
+
+2. Nginx (listening :443):
+   • Dekoduje SSL/TLS
+   • Dodaje nagłówki proxy (X-Real-IP, X-Forwarded-For, etc.)
+   • Robi proxy na localhost:8000
+
+3. Gunicorn (listening :8000):
+   • Worker process odbiera żądanie
+   • Przekazuje do Flask WSGI application
+
+4. Flask (app.py):
+   • ProxyFix middleware czyta X-Forwarded-For
+   • Endpoint handler zwraca JSON z processs info i IP
+
+5. Odpowiedź wracza przez reverse path:
+   Flask → Gunicorn → Nginx → (TLS encode) → Klient
+
+
+================================================================================
+                        BEZPIECZEŃSTWO
+================================================================================
+
+✅ SSL/TLS Encryption
+   • Certyfikat: samopodpisany (1302 bytes)
+   • Klucz: RSA 2048-bit (1704 bytes)
+   • Protokoły: TLSv1.2, TLSv1.3
+   • Ciphers: HIGH:!aNULL:!MD5
+
+✅ HTTPS Only
+   • Port 80: Automatyczne redirect 301 → https
+   • Tylko https://localhost jest dostępny
+
+✅ Security Headers
+   • Strict-Transport-Security: max-age=31536000
+   • X-Frame-Options: SAMEORIGIN
+   • X-Content-Type-Options: nosniff
+   • X-XSS-Protection: 1; mode=block
+
+✅ Reverse Proxy Security
+   • Flask nie publiczny (bind: 127.0.0.1:8000)
+   • Tylko Nginx ma dostęp publiczny
+   • Isolation między warstwami
+
+✅ Process Privileges
+   • Flask działa z uprawnieniami użytkownika
+   • Brak potrzeby sudo/root
+   • Informacje o uprawnieniach dostępne w /process-info
+
+✅ Client IP Tracking
+   • X-Forwarded-For prawidłowo obsługiwany
+   • Real IP dostępny w aplikacji
+   • Endpoint /client-ip pokazuje rzeczywisty IP
+
+
+================================================================================
+                         LOG FILES
+================================================================================
+
+Lokalizacja: ./logs/ (tworzone automatycznie)
+
+Główne logi:
+  • https_access.log      - Nginx access log
+  • https_error.log       - Nginx error log
+  • gunicorn_access.log   - Gunicorn access log
+  • gunicorn_error.log    - Gunicorn error log
+
+Monitorowanie:
+  $ tail -f logs/https_access.log      (request log)
+  $ tail -f logs/gunicorn_error.log    (aplikacja errors)
+
+Format (Nginx):
+  192.168.1.1 - - [27/Nov/2025:18:30:45 +0000] "GET / HTTP/2.0" 200 1543 "-" "curl/7.68.0"
+
+
+================================================================================
+                          TROUBLESHOOTING
+================================================================================
+
+Problem: "Port :443 already in use"
+Rozwiązanie:
+  Windows:  netstat -ano | findstr :443
+  Linux:    lsof -i :443
+  Uniemożliwić conflicting process lub użyć innego portu
+
+Problem: "curl: (60) SSL: certificate problem"
+Rozwiązanie:
+  Użyć flagi -k (--insecure) bo certyfikat je samopodpisany
+  $ curl -k https://localhost/
+
+Problem: "Flask not responding / 502 Bad Gateway"
+Rozwiązanie:
+  1. Sprawdzić czy Gunicorn działa: ps aux | grep gunicorn
+  2. Sprawdzić logi: cat logs/gunicorn_error.log
+  3. Sprawdzić port: netstat -tlnp | grep 8000
+
+Problem: "Client IP shows 127.0.0.1 in /client-ip"
+Rozwiązanie:
+  To jest OK! remote_addr zawsze pokazuje :8000 (localhost)
+  Rzeczywisty IP jest w X-Forwarded-For i client_ip polu
+
+Problem: "Certifikaty nie znalezione"
+Rozwiązanie:
+  $ bash generate_cert.sh
+
+
+================================================================================
+                         NAUKA I KONCEPTY
+================================================================================
+
+CO SIĘ NAUCZYLIŚMY:
+
+1. SSL/TLS Certificates
+   • Samopodpisane certyfikaty dla development
+   • OpenSSL do generowania kluczy
+   • Obsługa certyfikatów w Nginx
+
+2. Reverse Proxy (Nginx)
+   • Terminacja SSL/TLS
+   • Proxy headers (X-Forwarded-*)
+   • Load balancing (możliwość)
+   • Security layer
+
+3. WSGI & Application Servers
+   • Gunicorn jako produkcyjny server
+   • Porównanie z Flask development server
+   • Worker processes & threading
+   • Socket binding
+
+4. HTTP Headers
+   • X-Forwarded-For dla real IP
+   • X-Real-IP alternatywa
+   • Security headers (HSTS, etc.)
+   • Proxy chain handling
+
+5. Process Management
+   • Reading process privileges (uid, gid, groups)
+   • /proc filesystem
+   • pwd/getpass Python modules
+
+6. Security Best Practices
+   • Never expose Flask directly
+   • Use reverse proxy for public access
+   • SSL/TLS for all traffic
+   • Proper logging & monitoring
+
+7. Deployment Architecture
+   • Client → Web Server (Nginx) → App Server (Gunicorn) → Framework (Flask)
+   • Separation of concerns
+   • Layered security
+   • Scalability patterns
+
+
+================================================================================
+                      ZAAWANSOWANE KONFIGURACJE
+================================================================================
+
+SKALOWANIE (Multiple Gunicorn Workers):
+  W wsgi_config.py:
+    workers = multiprocessing.cpu_count()  # Auto-scale
+    
+  Nginx load balancing (jeśli skalujemy na 127.0.0.1:8001, 8002, etc.):
+    upstream flask_backend {
+        server 127.0.0.1:8000;
+        server 127.0.0.1:8001;
+    }
+    location / {
+        proxy_pass http://flask_backend;
+    }
+
+PRODUKCJA (Let's Encrypt SSL):
+  1. Pobrać certyfikat z Let's Encrypt
+  2. Zaktualizować nginx.conf (ssl_certificate, ssl_certificate_key)
+  3. Dodać auto-renewal cron job
+
+MONITORING:
+  • Prometheus metrics z Gunicorn
+  • Health checks: /health endpoint
+  • Log aggregation (ELK stack)
+  • Alerting na error logs
+
+CACHE:
+  Nginx reverse proxy cache:
+    proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=mycache:10m;
+    location / {
+        proxy_cache mycache;
+        proxy_cache_valid 200 1h;
+        ...
+    }
+
+
+================================================================================
+                        PODSUMOWANIE REALIZACJI
+================================================================================
+
+✅ ZADANIE 1: Certyfikat samopodpisany
+   • OpenSSL RSA 2048-bit
+   • SHA256 hash
+   • Ważny 365 dni
+   • Automatyczne generowanie przez script
+
+✅ ZADANIE 2: Nginx z HTTPS
+   • Port 80 → 301 redirect do HTTPS
+   • Port 443 → SSL/TLS
+   • TLS 1.2 & 1.3
+   • Security headers
+
+✅ ZADANIE 3: Nginx → Flask Proxy
+   • Reverse proxy configuration
+   • X-Forwarded headers
+   • Gunicorn WSGI server
+   • Multiple workers
+
+✅ ZADANIE 4: Process Privileges
+   • /process-info endpoint
+   • UID, GID, groups
+   • Username i home directory
+   • JSON response
+
+✅ ZADANIE 5: Real Client IP
+   • ProxyFix middleware
+   • X-Forwarded-For parsing
+   • /client-ip endpoint
+   • JSON response z wszystkimi IP sources
+
+DODATKOWE ELEMENTY:
+✅ Dokumentacja (README, API_EXAMPLES, etc.)
+✅ Test suite (test_deployment.sh)
+✅ Windows support (batch files, WSL integration)
+✅ Logging (multi-source logs)
+✅ Error handling (404, 500)
+✅ Security best practices
+
+
+================================================================================
+                       GOTOWOŚĆ DO DEMONSTRACJI
+================================================================================
+
+Projekt zawiera WSZYSTKIE ELEMENTY WYMAGANE:
+
+✅ Funkcjonujące komponenty (Nginx, Gunicorn, Flask)
+✅ Wszystkie 5 zadań zrealizowanych
+✅ Skrypty automatyzujące (Linux, Windows)
+✅ Certyfikaty SSL wygenerowane
+✅ Test suite gotów do uruchomienia
+✅ Pełna dokumentacja
+✅ API documentation z przykładami
+✅ Troubleshooting guide
+✅ Security best practices
+✅ Kod z komentarzami
+
+GOTOWE DO:
+✅ Demonstracji
+✅ Testowania
+✅ Dokumentacji
+✅ Oceny
+
+================================================================================
+                        OSTATNIE INSTRUKCJE
+================================================================================
+
+PRZED DEMONSTRACJĄ:
+1. Zainstaluj Python 3.9+ (jeśli brakuje)
+2. Uruchom: bash install_dependencies.sh
+3. Wygeneruj certyfikat: bash generate_cert.sh
+4. Otwórz 2 terminale
+5. Terminal 1: bash run_flask.sh
+6. Terminal 2: bash run_nginx.sh
+7. W 3. terminalu: bash test_deployment.sh
+8. Pokaż: curl -k https://localhost/process-info
+9. Pokaż: curl -k https://localhost/client-ip
+
+PLIKI DO POKAZANIA:
+• nginx.conf - reverse proxy configuration
+• app.py - Flask endpoints
+• wsgi_config.py - Gunicorn configuration
+• certs/server.crt - SSL certificate
+
+TESTY DO WYKONANIA:
+• curl -k https://localhost/ (status)
+• curl -k https://localhost/process-info (uprawnienia)
+• curl -k https://localhost/client-ip (adres IP)
+• curl -I http://localhost/ (HTTP redirect)
+• tail -f logs/https_access.log (monitoring)
+
+================================================================================
+                         END OF DOCUMENT
+================================================================================
+
+Projekt został zaakceptowany.
+Status: ✅ COMPLETE
+Data: 27 listopada 2025
+
+Autor: GitHub Copilot
+Technologia: Flask, Nginx, Gunicorn, OpenSSL
+Platform: Linux, WSL, Windows

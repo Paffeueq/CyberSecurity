@@ -1,0 +1,66 @@
+ZAD 1
+
+bash generate_cert.sh
+cd 'd:\stud\sem 5\OchronaDanych\7'; Get-ChildItem certs/ -File | ForEach-Object { "$($_.Name) - $($_.Length) bytes - Created: $($_.LastWriteTime)" }
+
+ZAD 2
+
+1 kosnola
+
+WSL
+sudo killall nginx
+bash -c "cd '/mnt/d/stud/sem 5/OchronaDanych/7' && sudo bash run_nginx.sh"    
+
+2 kosnola
+
+curl -k https://localhost/
+
+3 kosnola
+
+curl -I http://localhost/
+
+ZAD 3
+
+1 Terminal
+
+WSL
+
+cd '/mnt/d/stud/sem 5/OchronaDanych/7'
+
+sudo killall nginx
+
+sudo bash run_nginx.sh
+
+2 Terminal
+
+WSL
+
+export PATH="/home/pawel/.local/bin:$PATH"
+
+cd '/mnt/d/stud/sem 5/OchronaDanych/7'
+
+bash run_flask.sh
+
+3 TERMINAL
+
+curl -k https://localhost/
+
+curl -k https://localhost/health
+
+
+ZAD 4: UPRAWNIENIA PROCESU FLASK
+
+1 i 2 temrinal tak jak w zad 3 
+
+3 TERMINAL
+
+curl -k https://localhost/process-info
+
+
+ZAD 5: RZECZYWISTY IP KLIENTA
+
+1 i 2 temrinal tak jak w zad 3 
+
+3 TERMINAL (PowerShell)
+
+curl -k https://localhost/client-ip

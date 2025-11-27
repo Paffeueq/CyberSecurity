@@ -9,9 +9,9 @@ from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 
 # Konfiguracja
-SERVER_URL = "http://192.168.0.57:5555"
+SERVER_URL = "http://127.0.0.1:5555"
 TARGET_UID = "deadbeef"
-MESSAGE = "Cześć deadbeef! To jest zaszyfrowana wiadomość."
+MESSAGE = "Zaszyfrowna wiadomosc dla deadbeef"
 
 def send_encrypted_message():
     """Wysyła zaszyfrowaną wiadomość do deadbeef"""

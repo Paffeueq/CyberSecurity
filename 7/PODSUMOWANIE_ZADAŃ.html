@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ochrona Danych - Podsumowanie Zadań 1-5</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.8; color: #2c3e50; padding: 60px 50px; max-width: 1000px; margin: 0 auto; background: #f8f9fa; }
+        
+        h1 { color: #1a4d7a; font-size: 2.2em; margin-bottom: 10px; border-bottom: 4px solid #3498db; padding-bottom: 15px; text-align: center; }
+        h2 { color: #2980b9; font-size: 1.5em; margin-top: 40px; margin-bottom: 20px; border-left: 5px solid #3498db; padding-left: 15px; }
+        h3 { color: #34495e; font-size: 1.1em; margin-top: 15px; margin-bottom: 10px; }
+        
+        p { margin: 15px 0; }
+        li { margin: 8px 0; margin-left: 20px; }
+        
+        code { background: #ecf0f1; padding: 3px 8px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.95em; color: #c0392b; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 20px; border-radius: 5px; overflow-x: auto; line-height: 1.5; margin: 15px 0; border-left: 4px solid #e74c3c; }
+        pre code { background: none; padding: 0; color: #ecf0f1; font-size: 0.9em; }
+        
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table th { background: #3498db; color: white; padding: 15px; text-align: left; font-weight: bold; }
+        table td { border: 1px solid #bdc3c7; padding: 12px 15px; }
+        table tr:hover { background: #f0f7ff; }
+        table tr:nth-child(even) { background: #f9f9f9; }
+        
+        .meta { text-align: center; color: #7f8c8d; font-size: 0.95em; margin-bottom: 30px; border-bottom: 1px solid #bdc3c7; padding-bottom: 20px; }
+        .checklist { background: #d4edda; padding: 20px; border-left: 5px solid #28a745; margin: 20px 0; border-radius: 4px; }
+        .architecture { background: #e3f2fd; padding: 15px; border-left: 5px solid #2196f3; margin: 15px 0; font-family: monospace; line-height: 1.6; }
+        .key-point { background: #fff3cd; padding: 15px; border-left: 5px solid #ffc107; margin: 15px 0; border-radius: 4px; }
+        
+        .section { page-break-inside: avoid; background: white; padding: 20px; margin: 20px 0; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        
+        strong { color: #c0392b; font-weight: bold; }
+        em { color: #8e44ad; font-style: italic; }
+        
+        @media print { 
+            body { background: white; }
+            .section { page-break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+            a { color: #2980b9; text-decoration: underline; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="meta">
+    <strong>Ochrona Danych - Praktyka Bezpieczeństwa Sieci</strong><br>
+    Podsumowanie Zadań 1-5<br>
+    27 listopada 2025 | Paweł
+</div>
+
+<h1>Ochrona Danych - Podsumowanie Zadań 1-5</h1>
+
+<p><strong>Przedmiot:</strong> Ochrona Danych  </p>
+<p><strong>Data:</strong> 27 listopada 2025  </p>
+<p><strong>Student:</strong> Paweł  </p>
+
+<p>---</p>
+
+<h2>🎯 Cel Projektu</h2>
+
+<p>Zbudować bezpieczną architekturę web aplikacji z:</p>
+<li>Szyfrowaniem HTTPS (SSL/TLS)</li>
+<li>Nginx jako reverse proxy</li>
+<li>Flask + Gunicorn (production WSGI server, <strong>nie dev server</strong>)</li>
+<li>Obsługą uprawnień procesów</li>
+<li>Detekcją rzeczywistego IP klienta</li>
+
+<p>---</p>
+
+<h2>✅ Zadanie 1: Wygenerować Certyfikat Samopodpisany</h2>
+
+<p><strong>Co robić:</strong></p>
+<pre><code class="bash">
+bash generate_cert.sh
+</code></pre>
+
+<p><strong>Wynik:</strong></p>
+<li><code>certs/server.crt</code> - 1302 bytes (certyfikat)</li>
+<li><code>certs/server.key</code> - 1704 bytes (klucz prywatny)</li>
+<li>Ważny przez 365 dni</li>
+<li>RSA 2048-bit, SHA256</li>
+
+<p><strong>Znaczenie:</strong> Szyfrowanie HTTPS wymaga certyfikatu. Samopodpisany wystarczy do testów.</p>
+
+<p>---</p>
+
+<h2>✅ Zadanie 2: Skonfigurować Nginx dla HTTPS</h2>
+
+<p><strong>Architektura:</strong></p>
+<pre><code class="">
+Klient (HTTPS :443) ←→ Nginx (SSL terminator)
+       ↓
+HTTP :80 → redirect 301 → HTTPS :443
+</code></pre>
+
+<p><strong>Kroki:</strong></p>
+
+<p>Terminal 1 (WSL):</p>
+<pre><code class="bash">
+sudo killall nginx
+sudo bash run_nginx.sh
+</code></pre>
+
+<p>Terminal 2 (PowerShell):</p>
+<pre><code class="powershell">
+# Test HTTP → HTTPS redirect (301)
+curl -I http://localhost/
+# → HTTP/1.1 301 Moved Permanently
+# → Location: https://localhost/
+
+# Test HTTPS (będzie 502, bo Flask nie działa)
+curl -k https://localhost/
+# → &lt;html&gt;&lt;h1&gt;502 Bad Gateway&lt;/h1&gt;&lt;/html&gt;
+</code></pre>
+
+<p><strong>Znaczenie:</strong> </p>
+<li>Flaga <code>-k</code> = ignoruj warning o samopodpisanym certyfikacie</li>
+<li>301 status = permanent redirect</li>
+<li>502 = nginx czeka na backend (normalnie na tym etapie)</li>
+
+<p><strong>Konfiguracja:</strong></p>
+<li>Port 80: HTTP redirect do HTTPS</li>
+<li>Port 443: SSL/TLS, proxy do <code>127.0.0.1:8000</code></li>
+<li>Sertyfikaty: <code>./certs/server.crt</code> i `./certs/server.key`</li>
+
+<p>---</p>
+
+<h2>✅ Zadanie 3: Nginx jako Proxy do Flask/Gunicorn</h2>
+
+<p><strong>WAŻNE:</strong> Flask musi być na <em></em>Gunicorn** (production WSGI), NIE na dev serverze!</p>
+
+<p><strong>Architektura:</strong></p>
+<pre><code class="">
+Klient → Nginx (SSL, reverse proxy) → Gunicorn (127.0.0.1:8000) → Flask (app)
+</code></pre>
+
+<p><strong>Kroki:</strong></p>
+
+<p>Terminal 1 (WSL) - Nginx:</p>
+<pre><code class="bash">
+sudo bash run_nginx.sh
+</code></pre>
+
+<p>Terminal 2 (WSL) - Flask:</p>
+<pre><code class="bash">
+export PATH="/home/pawel/.local/bin:$PATH"
+cd '/mnt/d/stud/sem 5/OchronaDanych/7'
+bash run_flask.sh
+</code></pre>
+
+<p>Terminal 3 (PowerShell) - Test:</p>
+<pre><code class="powershell">
+# Endpoint główny
+curl -k https://localhost/
+
+# Health check
+curl -k https://localhost/health
+</code></pre>
+
+<p><strong>Wynik - JSON:</strong></p>
+<pre><code class="json">
+{
+  "status": "ok",
+  "https": true,
+  "message": "Flask application running with Gunicorn through Nginx SSL proxy",
+  "client_ip": "127.0.0.1",
+  "process_info": {...},
+  "headers": {...},
+  "server_info": {...}
+}
+</code></pre>
+
+<p><strong>Znaczenie:</strong> </p>
+<li>Gunicorn to production server (stabilny, skalujący)</li>
+<li>Flask dev server NIE powinien być w production</li>
+<li>Nginx oddala Flask od dostępu bezpośredniego (bezpieczeństwo)</li>
+
+<p>---</p>
+
+<h2>✅ Zadanie 4: Uprawnienia Procesu Flask</h2>
+
+<p><strong>Polecenie:</strong></p>
+<pre><code class="powershell">
+curl -k https://localhost/process-info
+</code></pre>
+
+<p><strong>Wynik:</strong></p>
+<pre><code class="json">
+{
+  "uid": 1000,
+  "gid": 1000,
+  "username": "pawel",
+  "current_user": "pawel",
+  "home": "/home/pawel",
+  "groups": [4,20,24,25,27,29,30,44,46,116,1000]
+}
+</code></pre>
+
+<p><strong>Co to oznacza:</strong></p>
+<table><tr><td colspan="4">| Pole | Wartość | Znaczenie |</td></tr></table>
+<table><tr><td colspan="4">|------|---------|-----------|</td></tr></table>
+<table><tr><td colspan="4">| `uid` | 1000 | Zwykły user (NOT root/0) |</td></tr></table>
+<table><tr><td colspan="4">| `gid` | 1000 | Grupa użytkownika |</td></tr></table>
+<table><tr><td colspan="4">| `username` | pawel | Nazwa użytkownika |</td></tr></table>
+<table><tr><td colspan="4">| `groups` | [...] | Grupy do których należy |</td></tr></table>
+
+<p><strong>Znaczenie:</strong> </p>
+<li>Flask działa jako zwykły user <code>pawel</code>, <strong>nie</strong> jako `root`</li>
+<li>To bezpieczne - ogranicza szkody w razie breakscha</li>
+<li>Root (uid=0) ma nieograniczone uprawnienia - ryzyko!</li>
+
+<p>---</p>
+
+<h2>✅ Zadanie 5: Odczytanie Rzeczywistego IP Klienta</h2>
+
+<p><strong>Problem:</strong> W architekturze proxy, Flask widzi IP = localhost, ale rzeczywisty klient jest zdalnie.</p>
+
+<p><strong>Rozwiązanie:</strong> Nginx dodaje nagłówek <code>X-Forwarded-For</code> z rzeczywistym IP.</p>
+
+<p><strong>Polecenie:</strong></p>
+<pre><code class="powershell">
+curl -k https://localhost/client-ip
+</code></pre>
+
+<p><strong>Wynik:</strong></p>
+<pre><code class="json">
+{
+  "client_ip": "127.0.0.1",
+  "remote_addr": "127.0.0.1",
+  "x_forwarded_for": "127.0.0.1",
+  "x_real_ip": "127.0.0.1"
+}
+</code></pre>
+
+<p><strong>Co to oznacza:</strong></p>
+<table><tr><td colspan="4">| Pole | Wartość | Źródło |</td></tr></table>
+<table><tr><td colspan="4">|------|---------|--------|</td></tr></table>
+<table><tr><td colspan="4">| `client_ip` | 127.0.0.1 | Detected z `X-Forwarded-For` |</td></tr></table>
+<table><tr><td colspan="4">| `remote_addr` | 127.0.0.1 | Połączenie do Flaska (localhost) |</td></tr></table>
+<table><tr><td colspan="4">| `x_forwarded_for` | 127.0.0.1 | Nagłówek od Nginx'a |</td></tr></table>
+<table><tr><td colspan="4">| `x_real_ip` | 127.0.0.1 | Nagłówek od Nginx'a |</td></tr></table>
+
+<p><strong>Znaczenie:</strong></p>
+<li><code>remote_addr</code> = IP który się podłączy do Flaska (tu: localhost bo proxy)</li>
+<li><code>X-Forwarded-For</code> = rzeczywisty IP klienta (przekazany przez Nginx)</li>
+<li><strong>ProxyFix middleware</strong> w Flasku parsuje te nagłówki</li>
+<li>W produkcji: <code>client_ip</code> będzie rzeczywistym IP z Internetu</li>
+
+<p><strong>W nginx.conf:</strong></p>
+<pre><code class="nginx">
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+</code></pre>
+
+<p>---</p>
+
+<h2>🏗️ Technologia Stack</h2>
+
+<table><tr><td colspan="4">| Komponent | Rola | Port |</td></tr></table>
+<table><tr><td colspan="4">|-----------|------|------|</td></tr></table>
+<table><tr><td colspan="4">| **Nginx** 1.18.0 | Reverse proxy, SSL terminator | 80, 443 |</td></tr></table>
+<table><tr><td colspan="4">| **Flask** 3.0.0 | Web framework | - |</td></tr></table>
+<table><tr><td colspan="4">| **Gunicorn** 21.2.0 | WSGI application server | 8000 |</td></tr></table>
+<table><tr><td colspan="4">| **Werkzeug** 3.0.0 | ProxyFix middleware | - |</td></tr></table>
+<table><tr><td colspan="4">| **OpenSSL** | SSL certificate generation | - |</td></tr></table>
+<table><tr><td colspan="4">| **WSL** | Linux environment na Windows | - |</td></tr></table>
+
+<p>---</p>
+
+<h2>🔐 Security Features</h2>
+
+<p style="color: green;">✅ <strong>HTTPS Only</strong> - HTTP auto-redirect do HTTPS (301)  </p>
+<p style="color: green;">✅ <strong>TLS 1.2 + 1.3</strong> - Modern encryption  </p>
+<p style="color: green;">✅ <strong>Self-signed Certificate</strong> - RSA 2048-bit  </p>
+<p style="color: green;">✅ <strong>Regular User</strong> - Flask uid=1000 (NOT root)  </p>
+<p style="color: green;">✅ <strong>Reverse Proxy</strong> - Flask nie dostępny bezpośrednio  </p>
+<p style="color: green;">✅ <strong>Security Headers</strong> - HSTS, X-Frame-Options, itp.  </p>
+<p style="color: green;">✅ <strong>Real IP Detection</strong> - X-Forwarded-For support  </p>
+
+<p>---</p>
+
+<h2>📋 Checklist Weryfikacji</h2>
+
+<li>[x] Certyfikat wygenerowany (<code>certs/server.crt</code>, `server.key`)</li>
+<li>[x] Nginx running na portach 80/443</li>
+<li>[x] HTTP redirect do HTTPS (301 status)</li>
+<li>[x] HTTPS dostępny (bez 502 po uruchomieniu Flaska)</li>
+<li>[x] Gunicorn binding na 127.0.0.1:8000</li>
+<li>[x] Flask accessible przez proxy</li>
+<li>[x] <code>/process-info</code> pokazuje uid=1000 (zwykły user)</li>
+<li>[x] <code>/client-ip</code> pokazuje X-Forwarded-For headers</li>
+<li>[x] Pełny flow: Klient → Nginx → Gunicorn → Flask</li>
+
+<p>---</p>
+
+<h2>💡 Kluczowe Punkty do Zaprezentowania</h2>
+
+<p>1. <strong>Certyfikat samopodpisany</strong> - potrzebny do HTTPS, ważny 365 dni</p>
+<p>2. <strong>Nginx + reverse proxy</strong> - oddala Flask od sieci, obsługuje SSL</p>
+<p>3. <strong>Gunicorn nie Flask dev</strong> - production-ready, skaluje się</p>
+<p>4. <strong>uid=1000 (regular user)</strong> - bezpieczeństwo, nie root</p>
+<p>5. <strong>X-Forwarded-For headers</strong> - rzeczywisty IP mimo proxy</p>
+
+<p>---</p>
+
+<p><strong>Gotowy do rozmowy z prowadzącym! 🚀</strong></p>
+
+
+<div style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 2px solid #bdc3c7; color: #7f8c8d;">
+    <p><strong>✅ Gotowy do rozmowy z prowadzącym!</strong></p>
+    <p style="font-size: 0.9em;">Dokument wygenerowany: 27.11.2025 | Wersja: 1.0</p>
+</div>
+
+</body>
+</html>

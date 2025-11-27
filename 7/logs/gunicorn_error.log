@@ -1,0 +1,360 @@
+[2025-11-27 19:53:10 +0100] [2849] [INFO] Starting gunicorn 21.2.0
+[2025-11-27 19:53:10 +0100] [2849] [INFO] Listening at: http://127.0.0.1:8000 (2849)
+[2025-11-27 19:53:10 +0100] [2849] [INFO] Using worker: sync
+[2025-11-27 19:53:10 +0100] [2850] [INFO] Booting worker with pid: 2850
+[2025-11-27 19:53:10 +0100] [2851] [INFO] Booting worker with pid: 2851
+[2025-11-27 19:53:10 +0100] [2852] [INFO] Booting worker with pid: 2852
+[2025-11-27 19:53:10 +0100] [2853] [INFO] Booting worker with pid: 2853
+[2025-11-27 19:53:10 +0100] [2854] [INFO] Booting worker with pid: 2854
+[2025-11-27 19:53:10 +0100] [2855] [INFO] Booting worker with pid: 2855
+[2025-11-27 19:53:10 +0100] [2856] [INFO] Booting worker with pid: 2856
+[2025-11-27 19:53:10 +0100] [2857] [INFO] Booting worker with pid: 2857
+[2025-11-27 19:53:10 +0100] [2858] [INFO] Booting worker with pid: 2858
+[2025-11-27 19:53:10 +0100] [2859] [INFO] Booting worker with pid: 2859
+[2025-11-27 19:53:10 +0100] [2860] [INFO] Booting worker with pid: 2860
+[2025-11-27 19:53:10 +0100] [2861] [INFO] Booting worker with pid: 2861
+[2025-11-27 20:00:40 +0100] [2849] [ERROR] Worker (pid:2858) was sent SIGHUP!
+[2025-11-27 20:00:40 +0100] [2849] [ERROR] Worker (pid:2857) was sent SIGHUP!
+[2025-11-27 20:00:40 +0100] [2934] [INFO] Booting worker with pid: 2934
+[2025-11-27 20:00:40 +0100] [2935] [INFO] Booting worker with pid: 2935
+[2025-11-27 20:00:40 +0100] [2936] [INFO] Booting worker with pid: 2936
+[2025-11-27 20:00:40 +0100] [2937] [INFO] Booting worker with pid: 2937
+[2025-11-27 20:00:40 +0100] [2938] [INFO] Booting worker with pid: 2938
+[2025-11-27 20:00:40 +0100] [2939] [INFO] Booting worker with pid: 2939
+[2025-11-27 20:00:40 +0100] [2940] [INFO] Booting worker with pid: 2940
+[2025-11-27 20:00:40 +0100] [2941] [INFO] Booting worker with pid: 2941
+[2025-11-27 20:00:40 +0100] [2942] [INFO] Booting worker with pid: 2942
+[2025-11-27 20:00:40 +0100] [2943] [INFO] Booting worker with pid: 2943
+[2025-11-27 20:00:40 +0100] [2944] [INFO] Booting worker with pid: 2944
+[2025-11-27 20:00:40 +0100] [2945] [INFO] Booting worker with pid: 2945
+[2025-11-27 20:00:40 +0100] [2849] [INFO] Handling signal: hup
+[2025-11-27 20:00:40 +0100] [2849] [INFO] Hang up: Master
+[2025-11-27 20:00:41 +0100] [2946] [INFO] Booting worker with pid: 2946
+[2025-11-27 20:00:41 +0100] [2947] [INFO] Booting worker with pid: 2947
+[2025-11-27 20:00:41 +0100] [2948] [INFO] Booting worker with pid: 2948
+[2025-11-27 20:00:41 +0100] [2949] [INFO] Booting worker with pid: 2949
+[2025-11-27 20:00:41 +0100] [2950] [INFO] Booting worker with pid: 2950
+[2025-11-27 20:00:41 +0100] [2951] [INFO] Booting worker with pid: 2951
+[2025-11-27 20:00:41 +0100] [2952] [INFO] Booting worker with pid: 2952
+[2025-11-27 20:00:41 +0100] [2953] [INFO] Booting worker with pid: 2953
+[2025-11-27 20:00:41 +0100] [2954] [INFO] Booting worker with pid: 2954
+[2025-11-27 20:00:41 +0100] [2955] [INFO] Booting worker with pid: 2955
+[2025-11-27 20:00:41 +0100] [2934] [INFO] Worker exiting (pid: 2934)
+[2025-11-27 20:00:41 +0100] [2956] [INFO] Booting worker with pid: 2956
+[2025-11-27 20:00:41 +0100] [2935] [INFO] Worker exiting (pid: 2935)
+[2025-11-27 20:00:41 +0100] [2849] [INFO] Handling signal: hup
+[2025-11-27 20:00:41 +0100] [2957] [INFO] Booting worker with pid: 2957
+[2025-11-27 20:00:41 +0100] [2936] [INFO] Worker exiting (pid: 2936)
+[2025-11-27 20:00:41 +0100] [2849] [INFO] Hang up: Master
+[2025-11-27 20:00:41 +0100] [2937] [INFO] Worker exiting (pid: 2937)
+[2025-11-27 20:00:41 +0100] [2939] [INFO] Worker exiting (pid: 2939)
+[2025-11-27 20:00:41 +0100] [2938] [INFO] Worker exiting (pid: 2938)
+[2025-11-27 20:00:41 +0100] [2940] [INFO] Worker exiting (pid: 2940)
+[2025-11-27 20:00:41 +0100] [2941] [INFO] Worker exiting (pid: 2941)
+[2025-11-27 20:00:41 +0100] [2944] [INFO] Worker exiting (pid: 2944)
+[2025-11-27 20:00:41 +0100] [2943] [INFO] Worker exiting (pid: 2943)
+[2025-11-27 20:00:41 +0100] [2942] [INFO] Worker exiting (pid: 2942)
+[2025-11-27 20:00:41 +0100] [2945] [INFO] Worker exiting (pid: 2945)
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2934) exited with code 120
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2934) exited with code 120.
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2938) exited with code 120
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2938) exited with code 120.
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2942) exited with code 120
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2942) exited with code 120.
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2945) exited with code 120
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2945) exited with code 120.
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2941) exited with code 120
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2941) exited with code 120.
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2943) exited with code 120
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2943) exited with code 120.
+[2025-11-27 20:00:41 +0100] [2958] [INFO] Booting worker with pid: 2958
+[2025-11-27 20:00:41 +0100] [2959] [INFO] Booting worker with pid: 2959
+[2025-11-27 20:00:41 +0100] [2960] [INFO] Booting worker with pid: 2960
+[2025-11-27 20:00:41 +0100] [2961] [INFO] Booting worker with pid: 2961
+[2025-11-27 20:00:41 +0100] [2962] [INFO] Booting worker with pid: 2962
+[2025-11-27 20:00:41 +0100] [2963] [INFO] Booting worker with pid: 2963
+[2025-11-27 20:00:41 +0100] [2964] [INFO] Booting worker with pid: 2964
+[2025-11-27 20:00:41 +0100] [2967] [INFO] Booting worker with pid: 2967
+[2025-11-27 20:00:41 +0100] [2965] [INFO] Booting worker with pid: 2965
+[2025-11-27 20:00:41 +0100] [2966] [INFO] Booting worker with pid: 2966
+[2025-11-27 20:00:41 +0100] [2968] [INFO] Booting worker with pid: 2968
+[2025-11-27 20:00:41 +0100] [2969] [INFO] Booting worker with pid: 2969
+[2025-11-27 20:00:41 +0100] [2950] [INFO] Worker exiting (pid: 2950)
+[2025-11-27 20:00:41 +0100] [2954] [INFO] Worker exiting (pid: 2954)
+[2025-11-27 20:00:41 +0100] [2956] [INFO] Worker exiting (pid: 2956)
+[2025-11-27 20:00:41 +0100] [2955] [INFO] Worker exiting (pid: 2955)
+[2025-11-27 20:00:41 +0100] [2949] [INFO] Worker exiting (pid: 2949)
+[2025-11-27 20:00:41 +0100] [2946] [INFO] Worker exiting (pid: 2946)
+[2025-11-27 20:00:41 +0100] [2952] [INFO] Worker exiting (pid: 2952)
+[2025-11-27 20:00:41 +0100] [2947] [INFO] Worker exiting (pid: 2947)
+[2025-11-27 20:00:41 +0100] [2951] [INFO] Worker exiting (pid: 2951)
+[2025-11-27 20:00:41 +0100] [2957] [INFO] Worker exiting (pid: 2957)
+[2025-11-27 20:00:41 +0100] [2948] [INFO] Worker exiting (pid: 2948)
+[2025-11-27 20:00:41 +0100] [2953] [INFO] Worker exiting (pid: 2953)
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2950) exited with code 120
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2950) exited with code 120.
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2948) was sent SIGTERM!
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2952) was sent SIGTERM!
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2953) was sent SIGTERM!
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2957) was sent SIGTERM!
+[2025-11-27 20:00:41 +0100] [2849] [ERROR] Worker (pid:2955) was sent SIGTERM!
+[2025-11-27 20:08:25 +0100] [839] [INFO] Starting gunicorn 21.2.0
+[2025-11-27 20:08:25 +0100] [839] [INFO] Listening at: http://127.0.0.1:8000 (839)
+[2025-11-27 20:08:25 +0100] [839] [INFO] Using worker: sync
+[2025-11-27 20:08:25 +0100] [840] [INFO] Booting worker with pid: 840
+[2025-11-27 20:08:25 +0100] [841] [INFO] Booting worker with pid: 841
+[2025-11-27 20:08:25 +0100] [845] [INFO] Booting worker with pid: 845
+[2025-11-27 20:08:26 +0100] [846] [INFO] Booting worker with pid: 846
+[2025-11-27 20:08:26 +0100] [847] [INFO] Booting worker with pid: 847
+[2025-11-27 20:08:26 +0100] [848] [INFO] Booting worker with pid: 848
+[2025-11-27 20:08:26 +0100] [849] [INFO] Booting worker with pid: 849
+[2025-11-27 20:08:26 +0100] [850] [INFO] Booting worker with pid: 850
+[2025-11-27 20:08:26 +0100] [851] [INFO] Booting worker with pid: 851
+[2025-11-27 20:08:26 +0100] [852] [INFO] Booting worker with pid: 852
+[2025-11-27 20:08:26 +0100] [853] [INFO] Booting worker with pid: 853
+[2025-11-27 20:08:26 +0100] [854] [INFO] Booting worker with pid: 854
+[2025-11-27 20:09:57 +0100] [839] [ERROR] Worker (pid:840) was sent SIGHUP!
+[2025-11-27 20:09:57 +0100] [897] [INFO] Booting worker with pid: 897
+[2025-11-27 20:09:57 +0100] [898] [INFO] Booting worker with pid: 898
+[2025-11-27 20:09:57 +0100] [899] [INFO] Booting worker with pid: 899
+[2025-11-27 20:09:57 +0100] [900] [INFO] Booting worker with pid: 900
+[2025-11-27 20:09:57 +0100] [901] [INFO] Booting worker with pid: 901
+[2025-11-27 20:09:58 +0100] [902] [INFO] Booting worker with pid: 902
+[2025-11-27 20:09:58 +0100] [903] [INFO] Booting worker with pid: 903
+[2025-11-27 20:09:58 +0100] [904] [INFO] Booting worker with pid: 904
+[2025-11-27 20:09:58 +0100] [905] [INFO] Booting worker with pid: 905
+[2025-11-27 20:09:58 +0100] [906] [INFO] Booting worker with pid: 906
+[2025-11-27 20:09:58 +0100] [907] [INFO] Booting worker with pid: 907
+[2025-11-27 20:09:58 +0100] [908] [INFO] Booting worker with pid: 908
+[2025-11-27 20:09:58 +0100] [839] [INFO] Handling signal: hup
+[2025-11-27 20:09:58 +0100] [839] [INFO] Hang up: Master
+[2025-11-27 20:09:58 +0100] [909] [INFO] Booting worker with pid: 909
+[2025-11-27 20:09:58 +0100] [910] [INFO] Booting worker with pid: 910
+[2025-11-27 20:09:58 +0100] [911] [INFO] Booting worker with pid: 911
+[2025-11-27 20:09:58 +0100] [912] [INFO] Booting worker with pid: 912
+[2025-11-27 20:09:58 +0100] [913] [INFO] Booting worker with pid: 913
+[2025-11-27 20:09:58 +0100] [914] [INFO] Booting worker with pid: 914
+[2025-11-27 20:09:58 +0100] [915] [INFO] Booting worker with pid: 915
+[2025-11-27 20:09:58 +0100] [916] [INFO] Booting worker with pid: 916
+[2025-11-27 20:09:58 +0100] [917] [INFO] Booting worker with pid: 917
+[2025-11-27 20:09:58 +0100] [918] [INFO] Booting worker with pid: 918
+[2025-11-27 20:09:58 +0100] [919] [INFO] Booting worker with pid: 919
+[2025-11-27 20:09:58 +0100] [897] [INFO] Worker exiting (pid: 897)
+[2025-11-27 20:09:58 +0100] [907] [INFO] Worker exiting (pid: 907)
+[2025-11-27 20:09:58 +0100] [839] [INFO] Handling signal: hup
+[2025-11-27 20:09:58 +0100] [898] [INFO] Worker exiting (pid: 898)
+[2025-11-27 20:09:58 +0100] [920] [INFO] Booting worker with pid: 920
+[2025-11-27 20:09:58 +0100] [899] [INFO] Worker exiting (pid: 899)
+[2025-11-27 20:09:58 +0100] [839] [INFO] Hang up: Master
+[2025-11-27 20:09:58 +0100] [900] [INFO] Worker exiting (pid: 900)
+[2025-11-27 20:09:58 +0100] [901] [INFO] Worker exiting (pid: 901)
+[2025-11-27 20:09:58 +0100] [903] [INFO] Worker exiting (pid: 903)
+[2025-11-27 20:09:58 +0100] [904] [INFO] Worker exiting (pid: 904)
+[2025-11-27 20:09:58 +0100] [905] [INFO] Worker exiting (pid: 905)
+[2025-11-27 20:09:58 +0100] [902] [INFO] Worker exiting (pid: 902)
+[2025-11-27 20:09:58 +0100] [906] [INFO] Worker exiting (pid: 906)
+[2025-11-27 20:09:58 +0100] [908] [INFO] Worker exiting (pid: 908)
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:898) exited with code 120
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:898) exited with code 120.
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:897) exited with code 120
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:899) exited with code 120
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:899) exited with code 120.
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:897) exited with code 120.
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:901) exited with code 120
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:901) exited with code 120.
+[2025-11-27 20:09:58 +0100] [921] [INFO] Booting worker with pid: 921
+[2025-11-27 20:09:58 +0100] [922] [INFO] Booting worker with pid: 922
+[2025-11-27 20:09:58 +0100] [923] [INFO] Booting worker with pid: 923
+[2025-11-27 20:09:58 +0100] [924] [INFO] Booting worker with pid: 924
+[2025-11-27 20:09:58 +0100] [925] [INFO] Booting worker with pid: 925
+[2025-11-27 20:09:58 +0100] [927] [INFO] Booting worker with pid: 927
+[2025-11-27 20:09:58 +0100] [931] [INFO] Booting worker with pid: 931
+[2025-11-27 20:09:58 +0100] [926] [INFO] Booting worker with pid: 926
+[2025-11-27 20:09:58 +0100] [928] [INFO] Booting worker with pid: 928
+[2025-11-27 20:09:58 +0100] [929] [INFO] Booting worker with pid: 929
+[2025-11-27 20:09:58 +0100] [930] [INFO] Booting worker with pid: 930
+[2025-11-27 20:09:58 +0100] [932] [INFO] Booting worker with pid: 932
+[2025-11-27 20:09:58 +0100] [911] [INFO] Worker exiting (pid: 911)
+[2025-11-27 20:09:58 +0100] [910] [INFO] Worker exiting (pid: 910)
+[2025-11-27 20:09:58 +0100] [914] [INFO] Worker exiting (pid: 914)
+[2025-11-27 20:09:58 +0100] [912] [INFO] Worker exiting (pid: 912)
+[2025-11-27 20:09:58 +0100] [916] [INFO] Worker exiting (pid: 916)
+[2025-11-27 20:09:58 +0100] [920] [INFO] Worker exiting (pid: 920)
+[2025-11-27 20:09:58 +0100] [919] [INFO] Worker exiting (pid: 919)
+[2025-11-27 20:09:58 +0100] [913] [INFO] Worker exiting (pid: 913)
+[2025-11-27 20:09:58 +0100] [909] [INFO] Worker exiting (pid: 909)
+[2025-11-27 20:09:58 +0100] [915] [INFO] Worker exiting (pid: 915)
+[2025-11-27 20:09:58 +0100] [917] [INFO] Worker exiting (pid: 917)
+[2025-11-27 20:09:58 +0100] [918] [INFO] Worker exiting (pid: 918)
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:910) exited with code 120
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:910) exited with code 120.
+[2025-11-27 20:09:58 +0100] [839] [ERROR] Worker (pid:909) was sent SIGTERM!
+[2025-11-27 20:14:02 +0100] [722] [INFO] Starting gunicorn 21.2.0
+[2025-11-27 20:14:02 +0100] [722] [INFO] Listening at: http://127.0.0.1:8000 (722)
+[2025-11-27 20:14:02 +0100] [722] [INFO] Using worker: sync
+[2025-11-27 20:14:02 +0100] [723] [INFO] Booting worker with pid: 723
+[2025-11-27 20:14:02 +0100] [724] [INFO] Booting worker with pid: 724
+[2025-11-27 20:14:02 +0100] [725] [INFO] Booting worker with pid: 725
+[2025-11-27 20:14:02 +0100] [726] [INFO] Booting worker with pid: 726
+[2025-11-27 20:14:02 +0100] [727] [INFO] Booting worker with pid: 727
+[2025-11-27 20:14:02 +0100] [728] [INFO] Booting worker with pid: 728
+[2025-11-27 20:14:02 +0100] [729] [INFO] Booting worker with pid: 729
+[2025-11-27 20:14:02 +0100] [730] [INFO] Booting worker with pid: 730
+[2025-11-27 20:14:02 +0100] [731] [INFO] Booting worker with pid: 731
+[2025-11-27 20:14:02 +0100] [732] [INFO] Booting worker with pid: 732
+[2025-11-27 20:14:02 +0100] [733] [INFO] Booting worker with pid: 733
+[2025-11-27 20:14:02 +0100] [734] [INFO] Booting worker with pid: 734
+[2025-11-27 20:14:49 +0100] [722] [ERROR] Worker (pid:729) was sent SIGHUP!
+[2025-11-27 20:14:49 +0100] [746] [INFO] Booting worker with pid: 746
+[2025-11-27 20:14:49 +0100] [748] [INFO] Booting worker with pid: 748
+[2025-11-27 20:14:49 +0100] [749] [INFO] Booting worker with pid: 749
+[2025-11-27 20:14:49 +0100] [750] [INFO] Booting worker with pid: 750
+[2025-11-27 20:14:49 +0100] [751] [INFO] Booting worker with pid: 751
+[2025-11-27 20:14:49 +0100] [752] [INFO] Booting worker with pid: 752
+[2025-11-27 20:14:49 +0100] [757] [INFO] Booting worker with pid: 757
+[2025-11-27 20:14:49 +0100] [758] [INFO] Booting worker with pid: 758
+[2025-11-27 20:14:49 +0100] [759] [INFO] Booting worker with pid: 759
+[2025-11-27 20:14:50 +0100] [760] [INFO] Booting worker with pid: 760
+[2025-11-27 20:14:50 +0100] [761] [INFO] Booting worker with pid: 761
+[2025-11-27 20:14:50 +0100] [762] [INFO] Booting worker with pid: 762
+[2025-11-27 20:14:50 +0100] [722] [INFO] Handling signal: hup
+[2025-11-27 20:14:50 +0100] [722] [INFO] Hang up: Master
+[2025-11-27 20:14:50 +0100] [763] [INFO] Booting worker with pid: 763
+[2025-11-27 20:14:50 +0100] [764] [INFO] Booting worker with pid: 764
+[2025-11-27 20:14:50 +0100] [765] [INFO] Booting worker with pid: 765
+[2025-11-27 20:14:50 +0100] [766] [INFO] Booting worker with pid: 766
+[2025-11-27 20:14:50 +0100] [767] [INFO] Booting worker with pid: 767
+[2025-11-27 20:14:50 +0100] [768] [INFO] Booting worker with pid: 768
+[2025-11-27 20:14:50 +0100] [769] [INFO] Booting worker with pid: 769
+[2025-11-27 20:14:50 +0100] [770] [INFO] Booting worker with pid: 770
+[2025-11-27 20:14:50 +0100] [771] [INFO] Booting worker with pid: 771
+[2025-11-27 20:14:50 +0100] [772] [INFO] Booting worker with pid: 772
+[2025-11-27 20:14:50 +0100] [773] [INFO] Booting worker with pid: 773
+[2025-11-27 20:14:50 +0100] [748] [INFO] Worker exiting (pid: 748)
+[2025-11-27 20:14:50 +0100] [746] [INFO] Worker exiting (pid: 746)
+[2025-11-27 20:14:50 +0100] [750] [INFO] Worker exiting (pid: 750)
+[2025-11-27 20:14:50 +0100] [774] [INFO] Booting worker with pid: 774
+[2025-11-27 20:14:50 +0100] [759] [INFO] Worker exiting (pid: 759)
+[2025-11-27 20:14:50 +0100] [757] [INFO] Worker exiting (pid: 757)
+[2025-11-27 20:14:50 +0100] [749] [INFO] Worker exiting (pid: 749)
+[2025-11-27 20:14:50 +0100] [758] [INFO] Worker exiting (pid: 758)
+[2025-11-27 20:14:50 +0100] [751] [INFO] Worker exiting (pid: 751)
+[2025-11-27 20:14:50 +0100] [760] [INFO] Worker exiting (pid: 760)
+[2025-11-27 20:14:50 +0100] [752] [INFO] Worker exiting (pid: 752)
+[2025-11-27 20:14:50 +0100] [762] [INFO] Worker exiting (pid: 762)
+[2025-11-27 20:14:50 +0100] [761] [INFO] Worker exiting (pid: 761)
+[2025-11-27 20:14:50 +0100] [722] [ERROR] Worker (pid:746) exited with code 120
+[2025-11-27 20:14:50 +0100] [722] [ERROR] Worker (pid:746) exited with code 120.
+[2025-11-27 20:14:50 +0100] [722] [ERROR] Worker (pid:750) was sent SIGTERM!
+[2025-11-27 20:14:50 +0100] [722] [ERROR] Worker (pid:751) was sent SIGTERM!
+[2025-11-27 20:14:50 +0100] [722] [ERROR] Worker (pid:749) was sent SIGTERM!
+[2025-11-27 20:17:05 +0100] [684] [INFO] Starting gunicorn 21.2.0
+[2025-11-27 20:17:05 +0100] [684] [INFO] Listening at: http://127.0.0.1:8000 (684)
+[2025-11-27 20:17:05 +0100] [684] [INFO] Using worker: sync
+[2025-11-27 20:17:05 +0100] [685] [INFO] Booting worker with pid: 685
+[2025-11-27 20:17:05 +0100] [686] [INFO] Booting worker with pid: 686
+[2025-11-27 20:17:05 +0100] [687] [INFO] Booting worker with pid: 687
+[2025-11-27 20:17:05 +0100] [688] [INFO] Booting worker with pid: 688
+[2025-11-27 20:17:05 +0100] [689] [INFO] Booting worker with pid: 689
+[2025-11-27 20:17:05 +0100] [690] [INFO] Booting worker with pid: 690
+[2025-11-27 20:17:05 +0100] [691] [INFO] Booting worker with pid: 691
+[2025-11-27 20:17:05 +0100] [692] [INFO] Booting worker with pid: 692
+[2025-11-27 20:17:06 +0100] [693] [INFO] Booting worker with pid: 693
+[2025-11-27 20:17:06 +0100] [694] [INFO] Booting worker with pid: 694
+[2025-11-27 20:17:06 +0100] [695] [INFO] Booting worker with pid: 695
+[2025-11-27 20:17:06 +0100] [696] [INFO] Booting worker with pid: 696
+[2025-11-27 20:18:44 +0100] [684] [ERROR] Worker (pid:689) was sent SIGHUP!
+[2025-11-27 20:18:44 +0100] [684] [ERROR] Worker (pid:688) was sent SIGHUP!
+[2025-11-27 20:18:44 +0100] [684] [ERROR] Worker (pid:687) was sent SIGHUP!
+[2025-11-27 20:18:44 +0100] [734] [INFO] Booting worker with pid: 734
+[2025-11-27 20:18:44 +0100] [735] [INFO] Booting worker with pid: 735
+[2025-11-27 20:18:44 +0100] [736] [INFO] Booting worker with pid: 736
+[2025-11-27 20:18:44 +0100] [737] [INFO] Booting worker with pid: 737
+[2025-11-27 20:18:44 +0100] [738] [INFO] Booting worker with pid: 738
+[2025-11-27 20:18:44 +0100] [739] [INFO] Booting worker with pid: 739
+[2025-11-27 20:18:44 +0100] [740] [INFO] Booting worker with pid: 740
+[2025-11-27 20:18:44 +0100] [741] [INFO] Booting worker with pid: 741
+[2025-11-27 20:18:44 +0100] [742] [INFO] Booting worker with pid: 742
+[2025-11-27 20:18:44 +0100] [743] [INFO] Booting worker with pid: 743
+[2025-11-27 20:18:44 +0100] [744] [INFO] Booting worker with pid: 744
+[2025-11-27 20:18:45 +0100] [745] [INFO] Booting worker with pid: 745
+[2025-11-27 20:18:45 +0100] [684] [INFO] Handling signal: hup
+[2025-11-27 20:18:45 +0100] [684] [INFO] Hang up: Master
+[2025-11-27 20:18:45 +0100] [746] [INFO] Booting worker with pid: 746
+[2025-11-27 20:18:45 +0100] [747] [INFO] Booting worker with pid: 747
+[2025-11-27 20:18:45 +0100] [748] [INFO] Booting worker with pid: 748
+[2025-11-27 20:18:45 +0100] [749] [INFO] Booting worker with pid: 749
+[2025-11-27 20:18:45 +0100] [751] [INFO] Booting worker with pid: 751
+[2025-11-27 20:18:45 +0100] [750] [INFO] Booting worker with pid: 750
+[2025-11-27 20:18:45 +0100] [752] [INFO] Booting worker with pid: 752
+[2025-11-27 20:18:45 +0100] [753] [INFO] Booting worker with pid: 753
+[2025-11-27 20:18:45 +0100] [754] [INFO] Booting worker with pid: 754
+[2025-11-27 20:18:45 +0100] [755] [INFO] Booting worker with pid: 755
+[2025-11-27 20:18:45 +0100] [756] [INFO] Booting worker with pid: 756
+[2025-11-27 20:18:45 +0100] [734] [INFO] Worker exiting (pid: 734)
+[2025-11-27 20:18:45 +0100] [757] [INFO] Booting worker with pid: 757
+[2025-11-27 20:18:45 +0100] [735] [INFO] Worker exiting (pid: 735)
+[2025-11-27 20:18:45 +0100] [684] [INFO] Handling signal: hup
+[2025-11-27 20:18:45 +0100] [736] [INFO] Worker exiting (pid: 736)
+[2025-11-27 20:18:45 +0100] [737] [INFO] Worker exiting (pid: 737)
+[2025-11-27 20:18:45 +0100] [684] [INFO] Hang up: Master
+[2025-11-27 20:18:45 +0100] [738] [INFO] Worker exiting (pid: 738)
+[2025-11-27 20:18:45 +0100] [739] [INFO] Worker exiting (pid: 739)
+[2025-11-27 20:18:45 +0100] [740] [INFO] Worker exiting (pid: 740)
+[2025-11-27 20:18:45 +0100] [742] [INFO] Worker exiting (pid: 742)
+[2025-11-27 20:18:45 +0100] [741] [INFO] Worker exiting (pid: 741)
+[2025-11-27 20:18:45 +0100] [743] [INFO] Worker exiting (pid: 743)
+[2025-11-27 20:18:45 +0100] [745] [INFO] Worker exiting (pid: 745)
+[2025-11-27 20:18:45 +0100] [744] [INFO] Worker exiting (pid: 744)
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:734) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:734) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:735) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:735) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:736) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:737) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:737) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:738) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:738) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:739) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:739) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:736) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:743) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:743) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:744) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:744) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:745) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:745) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:741) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:741) exited with code 120.
+[2025-11-27 20:18:45 +0100] [758] [INFO] Booting worker with pid: 758
+[2025-11-27 20:18:45 +0100] [759] [INFO] Booting worker with pid: 759
+[2025-11-27 20:18:45 +0100] [760] [INFO] Booting worker with pid: 760
+[2025-11-27 20:18:45 +0100] [761] [INFO] Booting worker with pid: 761
+[2025-11-27 20:18:45 +0100] [762] [INFO] Booting worker with pid: 762
+[2025-11-27 20:18:45 +0100] [763] [INFO] Booting worker with pid: 763
+[2025-11-27 20:18:45 +0100] [766] [INFO] Booting worker with pid: 766
+[2025-11-27 20:18:45 +0100] [764] [INFO] Booting worker with pid: 764
+[2025-11-27 20:18:45 +0100] [765] [INFO] Booting worker with pid: 765
+[2025-11-27 20:18:45 +0100] [768] [INFO] Booting worker with pid: 768
+[2025-11-27 20:18:45 +0100] [748] [INFO] Worker exiting (pid: 748)
+[2025-11-27 20:18:45 +0100] [746] [INFO] Worker exiting (pid: 746)
+[2025-11-27 20:18:45 +0100] [767] [INFO] Booting worker with pid: 767
+[2025-11-27 20:18:45 +0100] [752] [INFO] Worker exiting (pid: 752)
+[2025-11-27 20:18:45 +0100] [769] [INFO] Booting worker with pid: 769
+[2025-11-27 20:18:45 +0100] [747] [INFO] Worker exiting (pid: 747)
+[2025-11-27 20:18:45 +0100] [755] [INFO] Worker exiting (pid: 755)
+[2025-11-27 20:18:45 +0100] [751] [INFO] Worker exiting (pid: 751)
+[2025-11-27 20:18:45 +0100] [750] [INFO] Worker exiting (pid: 750)
+[2025-11-27 20:18:45 +0100] [749] [INFO] Worker exiting (pid: 749)
+[2025-11-27 20:18:45 +0100] [753] [INFO] Worker exiting (pid: 753)
+[2025-11-27 20:18:45 +0100] [754] [INFO] Worker exiting (pid: 754)
+[2025-11-27 20:18:45 +0100] [756] [INFO] Worker exiting (pid: 756)
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:748) exited with code 120
+[2025-11-27 20:18:45 +0100] [757] [INFO] Worker exiting (pid: 757)
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:748) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:752) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:752) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:746) exited with code 120
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:746) exited with code 120.
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:749) was sent SIGTERM!
+[2025-11-27 20:18:45 +0100] [684] [ERROR] Worker (pid:750) was sent SIGTERM!

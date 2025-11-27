@@ -1,0 +1,187 @@
+================================================================================
+                    ZAD 4: UPRAWNIENIA PROCESU FLASK
+================================================================================
+
+ZADANIE: Pokazać z jakimi uprawnieniami działa aplikacja Flask
+
+================================================================================
+                           JAK TO DZIAŁA
+================================================================================
+
+Flask działa jako PROCES na komputerze. Każdy proces ma UPRAWNIENIA:
+  • UID (User ID) - ID użytkownika
+  • GID (Group ID) - ID grupy
+  • Username - Nazwa użytkownika
+  • Groups - Lista wszystkich grup
+  • Home - Katalog domowy
+
+Flask powinien działać z uprawnieniami ZWYKŁEGO UŻYTKOWNIKA (nie root!)
+
+================================================================================
+                        WYMAGANIA DO ZAD 4
+================================================================================
+
+Muszą być uruchomione:
+  ✅ Terminal 1: Nginx (WSL)
+  ✅ Terminal 2: Flask + Gunicorn (WSL)
+  
+Jeśli nie są uruchomione - uruchom:
+
+TERMINAL 1 (WSL):
+  cd '/mnt/d/stud/sem 5/OchronaDanych/7'
+  sudo bash run_nginx.sh
+
+TERMINAL 2 (WSL):
+  export PATH="/home/pawel/.local/bin:$PATH"
+  cd '/mnt/d/stud/sem 5/OchronaDanych/7'
+  bash run_flask.sh
+
+================================================================================
+                        JAK TESTOWAĆ ZAD 4
+================================================================================
+
+TERMINAL 3 (PowerShell):
+
+  curl -k https://localhost/process-info
+
+Powinno zwrócić JSON z informacjami o procesie:
+
+  {
+    "message": "Current process privileges and user information",
+    "uid": 1000,
+    "username": "pawel",
+    "gid": 1000,
+    "groups": [4,20,24,25,27,29,30,44,46,116,1000],
+    "current_user": "pawel",
+    "home": "/home/pawel"
+  }
+
+================================================================================
+                    CO ZNACZĄ POSZCZEGÓLNE POLA
+================================================================================
+
+1. uid: 1000
+   → ID użytkownika
+   → 1000 = zwykły użytkownik (OK!)
+   → 0 = root (źle!)
+   → Flask ma ID 1000 = BEZPIECZNE ✅
+
+2. username: "pawel"
+   → Nazwa użytkownika
+   → Flask działa jako "pawel" (zwykły user)
+   → Nie jako "root" = DOBRZE! ✅
+
+3. gid: 1000
+   → ID grupy podstawowej
+   → Grupa którą ma użytkownik "pawel"
+
+4. groups: [4,20,24,25,27,29,30,44,46,116,1000]
+   → Lista wszystkich grup do których należy "pawel"
+   → Więcej grup = więcej uprawnień (ale kontolowane)
+
+5. current_user: "pawel"
+   → Aktualny użytkownik (potwierdzenie)
+
+6. home: "/home/pawel"
+   → Katalog domowy użytkownika
+   → Miejsce gdzie są pliki konfiguracyjne
+
+================================================================================
+                    DLACZEGO TO JEST WAŻNE
+================================================================================
+
+BEZPIECZEŃSTWO:
+  ✅ Flask działa jako ZWYKŁY USER (uid=1000)
+  ✅ NIE jako root (uid=0)
+  ✅ Ograniczone uprawnienia = bardziej bezpieczne
+  ✅ Jeśli Flask zostanie zhakowany, haker ma tylko uprawnienia "pawel"
+
+PORÓWNANIE:
+
+  ❌ ŹŁOE:  Flask działający jako root (uid=0)
+           Haker może zrobić WSZYSTKO (sformatować dysk, itp)
+
+  ✅ DOBRZE: Flask działający jako user (uid=1000)
+            Haker może zrobić tylko to co może "pawel"
+
+================================================================================
+                        JAK TO SIĘ ROBI W KODZIE
+================================================================================
+
+W app.py (endpoint /process-info):
+
+  import os
+  import pwd
+  import getpass
+
+  def get_process_info():
+      uid = os.getuid()                    # Biera UID procesu
+      user_info = pwd.getpwuid(uid)        # Pobiera info o user'ze
+      return {
+          'uid': uid,
+          'username': user_info.pw_name,
+          'gid': os.getgid(),
+          'groups': os.getgroups(),
+          'current_user': getpass.getuser(),
+          'home': user_info.pw_dir
+      }
+
+Funkcja czyta rzeczywiste uprawnienia procesu Flask!
+
+================================================================================
+                        TESTOWANIE KROK PO KROKU
+================================================================================
+
+Krok 1: Upewnij się że Flask działa
+  Wpisz w PowerShell:
+    curl -k https://localhost/
+  Powinno: JSON response (Flask żyje)
+
+Krok 2: Testuj endpoint /process-info
+  Wpisz w PowerShell:
+    curl -k https://localhost/process-info
+  Powinno: JSON z uid, username, gid, groups
+
+Krok 3: Sprawdź wartości
+  uid powinna być: 1000 (lub podobne - nie 0!)
+  username powinna być: pawel (lub twoja nazwa)
+  gid powinna być: 1000
+
+Krok 4: Zinterpretuj wynik
+  Jeśli uid ≠ 0 → BEZPIECZNE ✅
+  Jeśli uid = 0 → PROBLEM ❌ (Flask jako root!)
+
+================================================================================
+                    OCZEKIWANY REZULTAT
+================================================================================
+
+Odpowiedź z curl:
+
+  {
+    "message": "Current process privileges and user information",
+    "uid": 1000,
+    "username": "pawel",
+    "gid": 1000,
+    "groups": [
+      4, 20, 24, 25, 27, 29, 30, 44, 46, 116, 1000
+    ],
+    "current_user": "pawel",
+    "home": "/home/pawel"
+  }
+
+WNIOSEK:
+  ✅ Flask działa z uprawnieniami użytkownika "pawel"
+  ✅ UID = 1000 (zwykły user, nie root!)
+  ✅ Bezpieczna konfiguracja!
+  ✅ ZAD 4 UKOŃCZONE! ✅
+
+================================================================================
+                        CO DALEJ
+================================================================================
+
+Po sprawdzeniu ZAD 4 → przejdź do ZAD 5 (Rzeczywisty IP)
+
+Endpoint: /client-ip
+Komenda:  curl -k https://localhost/client-ip
+
+================================================================================

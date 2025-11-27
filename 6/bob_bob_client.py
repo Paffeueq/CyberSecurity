@@ -106,7 +106,7 @@ if __name__ == "__main__":
     
     if received_message:
         print("\n Wysyłam odpowiedź...")
-        response = f"Czesc John! Dobrze sie mam, dzieki! Dziekuje za wiadomosc."
+        response = f"Wiadomosc zwrotna do johna"
         send_message_to(SENDER_UID, response)
         print("Komunikacja dwukierunkowa udana!")
     else:

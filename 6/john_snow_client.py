@@ -92,7 +92,7 @@ if __name__ == "__main__":
     print(" === JOHN SNOW - WYSYLAM WIADOMOŚĆ ===\n")
     
     # Wysłanie wiadomości
-    message = "Czesc Bob! To ja, John Snow. Jak sie masz?"
+    message = "Wiadomosc od Johna dla Boba"
     send_message_to(TARGET_UID, message)
     
     print("\n Czekam na odpowiedź od bob_bob...")

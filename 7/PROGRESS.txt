@@ -1,0 +1,218 @@
+================================================================================
+                     PROJEKT: OCHRONA DANYCH - WYKONANIE
+================================================================================
+Data: 27 listopada 2025
+Status: W TRAKCIE
+
+================================================================================
+✅ ZAD 1: CERTYFIKAT SAMOPODPISANY - UKOŃCZONE
+================================================================================
+
+Polecenie:
+bash generate_cert.sh
+
+Rezultat:
+  ✓ Plik: certs/server.crt (1302 bytes)
+    - Certyfikat X.509 (publiczny)
+    - SHA256 with RSA
+    - Ważny: 27 Nov 2025 → 27 Nov 2026 (365 dni)
+    - CN: localhost
+
+  ✓ Plik: certs/server.key (1704 bytes)
+    - Klucz prywatny RSA 2048-bit
+    - SECRET! Nigdy nie dzielić!
+
+Co się stało:
+  1. OpenSSL wygenerował parę kluczy RSA (2048-bit)
+  2. Stworzył certyfikat X.509 samopodpisany
+  3. Umieścił certyfikat w certs/server.crt
+  4. Umieścił klucz prywatny w certs/server.key
+
+Sposób działania:
+  Samopodpisany = certyfikat podpisany SWOIM kluczem prywatnym (nie przez CA)
+  → Przeglądarka da warning "Untrusted certificate"
+  → Normalne w dev/test (nie produkcja!)
+
+Weryfikacja (z openssl):
+  $ openssl x509 -in certs/server.crt -noout -dates
+  $ openssl x509 -in certs/server.crt -text -noout
+
+Co wiemy:
+  ✓ Certyfikat istnieje
+  ✓ Klucz prywatny istnieje
+  ✓ Nginx będzie go używać na porcie 443
+
+================================================================================
+⏳ ZAD 2: NGINX HTTPS ONLY - PRZYGOTOWANIE
+================================================================================
+
+Następny krok:
+
+Polecenie:
+  $ mkdir -p logs          (tworzy katalog na logi)
+  $ bash run_nginx.sh      (uruchamia nginx)
+
+Co się stanie:
+  1. Nginx uruchomi się w tle
+  2. Będzie słuchać na porcie 80 (HTTP) i 443 (HTTPS)
+  3. Port 80 będzie redirectować na HTTPS
+  4. Port 443 będzie serwować HTTPS z SSL/TLS
+
+Testy (w innym terminalu):
+  Test 1 - HTTPS (będzie 502 bo Flask nie działa):
+    $ curl -k https://localhost/
+    Powinno: 502 Bad Gateway (normalne teraz)
+
+  Test 2 - HTTP redirect:
+    $ curl -I http://localhost/
+    Powinno: HTTP/1.1 301 Moved Permanently
+              Location: https://localhost/
+
+Flaga -k: 
+  -k = --insecure (ignoruj certyfikat warning)
+  Bo certyfikat jest samopodpisany, przeglądarka (i curl) da alert
+  -k mówi curl'owi żeby go zignorował
+
+Co to znaczy:
+  ✓ HTTP traffic (port 80) → automatycznie zmienia na HTTPS (port 443)
+  ✓ HTTPS traffic (port 443) → używa TLS 1.2 i 1.3
+  ✓ Certyfikat i klucz z ZAD 1 są ładowane
+  ✓ Reverse proxy gotowy do Flask (port 8000)
+
+================================================================================
+⏳ ZAD 3: FLASK Z GUNICORN (WSGI) - PRZYGOTOWANIE
+================================================================================
+
+Po ZAD 2:
+
+Polecenie:
+  $ bash install_dependencies.sh    (instaluje Flask, Gunicorn, Werkzeug)
+  $ bash run_flask.sh               (uruchamia Flask z Gunicorn)
+
+Co się stanie:
+  1. Zainstalują się pakiety Python
+  2. Flask aplikacja uruchomi się na localhost:8000
+  3. Gunicorn będzie mieć N workerów (= liczba CPU)
+  4. Nginx (z ZAD 2) będzie proxy'ować żądania na :8000
+
+Test:
+  $ curl -k https://localhost/
+  Powinno: JSON response ze statusem "ok"
+
+Co to znaczy:
+  ✓ Flask NIE serwuje bezpośrednio (!)
+  ✓ Flask NIE jest dostępny z portu publicznego
+  ✓ Tylko Nginx ma dostęp publiczny (:443)
+  ✓ Nginx proxy'uje do Flask na localhost:8000
+  ✓ Gunicorn to produkcyjny server (nie Flask dev server!)
+
+================================================================================
+⏳ ZAD 4: UPRAWNIENIA PROCESU FLASK
+================================================================================
+
+Po ZAD 3 (Flask+Gunicorn już działa):
+
+Endpoint:
+  $ curl -k https://localhost/process-info
+
+Powinno zwrócić (JSON):
+  {
+    "uid": 1000,
+    "username": "your_user",
+    "gid": 1000,
+    "groups": [1000, 27, 29, ...],
+    "current_user": "your_user",
+    "home": "/home/your_user"
+  }
+
+Co to znaczy:
+  ✓ uid = ID użytkownika (4-cyfrowy numer)
+  ✓ username = Nazwa użytkownika
+  ✓ gid = ID grupy podstawowej
+  ✓ groups = Wszystkie grupy do których należy user
+  ✓ current_user = Aktualny user (z getpass)
+  ✓ home = Katalog domowy
+
+Dlaczego to ważne:
+  • Pokazuje że Flask działa z uprawnieniami ZWYKŁEGO UŻYTKOWNIKA
+  • NIE jako root (!) - to jest bezpieczne
+  • Jeśli UID = 0 → to by był root (źle!)
+  • Uprawnienia są OGRANICZONE (dobra praktyka)
+
+================================================================================
+⏳ ZAD 5: RZECZYWISTY IP KLIENTA
+================================================================================
+
+Po ZAD 4:
+
+Endpoint:
+  $ curl -k https://localhost/client-ip
+
+Powinno zwrócić (JSON):
+  {
+    "client_ip": "127.0.0.1",
+    "x_real_ip": "127.0.0.1",
+    "x_forwarded_for": "127.0.0.1",
+    "remote_addr": "127.0.0.1"
+  }
+
+Co to znaczy:
+  • client_ip = To czego szukamy! (rzeczywisty IP klienta)
+  • x_real_ip = Nagłówek X-Real-IP z Nginx
+  • x_forwarded_for = Nagłówek X-Forwarded-For z Nginx
+  • remote_addr = Bezpośredni IP (zawsze 127.0.0.1 przez proxy)
+
+Dlaczego to jest ważne:
+  Z localhost client_ip = 127.0.0.1 (zawsze)
+  Ale jeśli byś się łączył z innego hosta (192.168.1.100):
+    Flask bez proxy byłby widać: 192.168.1.100
+    Flask za proxy widzi: 127.0.0.1 (to IP Nginx'a!)
+    
+  ProxyFix + X-Forwarded-For mapuje:
+    Flask widzi: 192.168.1.100 (rzeczywisty IP!)
+
+Jak to działa:
+  1. Klient (IP: 192.168.1.100) → łączy się do Nginx:443
+  2. Nginx widzi IP, dodaje nagłówek:
+     X-Forwarded-For: 192.168.1.100
+  3. Nginx proxy'uje do Flask:8000
+  4. Flask czyta nagłówek X-Forwarded-For
+  5. Flask zwraca: "client_ip": "192.168.1.100"
+
+W app.py:
+  from werkzeug.middleware.proxy_fix import ProxyFix
+  app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, ...)
+  
+  ProxyFix = middleware który parsuje X-Forwarded-* nagłówki
+  x_for=1 = czyta 1 poziom proxy (Nginx)
+
+================================================================================
+                          PODSUMOWANIE
+================================================================================
+
+Zadania:
+  1. ✅ Certyfikat - UKOŃCZONE
+  2. ⏳ Nginx HTTPS - Następnie
+  3. ⏳ Flask/Gunicorn - Potem
+  4. ⏳ Uprawnienia - Potem
+  5. ⏳ Real IP - Potem
+
+Pliki które będziesz używać:
+  • generate_cert.sh         (ZAD 1) ✅
+  • nginx.conf               (ZAD 2)
+  • app.py                   (ZAD 3, 4, 5)
+  • wsgi_config.py           (ZAD 3)
+  • requirements.txt         (ZAD 3)
+  • run_flask.sh             (ZAD 3)
+  • run_nginx.sh             (ZAD 2)
+  • install_dependencies.sh  (ZAD 3)
+  • certs/server.crt         (ZAD 1) ✅
+  • certs/server.key         (ZAD 1) ✅
+
+Monitorowanie:
+  tail -f logs/nginx_access.log        (żądania do Nginx)
+  tail -f logs/gunicorn_error.log      (błędy Flask)
+
+================================================================================
+                    NASTĘPNY KROK: ZAD 2 - NGINX HTTPS
+================================================================================

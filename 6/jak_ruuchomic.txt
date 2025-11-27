@@ -20,6 +20,12 @@ $env:DEADBEEF_KEY_1 = "key.1"
 $env:DEADBEEF_KEY_2 = "key.2"
 python app.py
 
+zad 1
+Terminal 2
+cd "d:\stud\sem 5\OchronaDanych\6"
+python send_message.py
+
+ZAd 2
 TERMINAL 2 - BOB_BOB (czeka na wiadomość):
 cd "d:\stud\sem 5\OchronaDanych\6"
 python bob_bob_client.py
